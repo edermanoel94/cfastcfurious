@@ -1,5 +1,5 @@
-#ifndef CFAST2FURIOUS_HPP
-#define CFAST2FURIOUS_HPP
+#ifndef CFASTCFURIOUS_HPP
+#define CFASTCFURIOUS_HPP
 
 #include <cstdlib>
 #include <iostream>
