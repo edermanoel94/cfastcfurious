@@ -1,14 +1,9 @@
 # CFastCFurious
 
-## TODO
+The CFastCFurious project is under development.
 
-- [ ] HTTP 1.1 Application
-- [ ] Thread (Linux and Windows)
-- [ ] SSL
+# Requirements
 
-## Quick Start
+- GCC 9.3.0+
 
-
-## Requirements
-
-
+Obs: Only works unix-like, no plans to working on win32 yet.
