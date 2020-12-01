@@ -1,4 +1,4 @@
-# CFast2Furios
+# CFastCFurious
 
 ## TODO
 
