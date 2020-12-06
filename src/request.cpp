@@ -1,64 +1,24 @@
 #include "request.hpp"
-#include <iostream>
 
-#define SEP_NEW_LINE "\r\n"
-#define STEP_SIZE 20
+Request::Request(const char* data_raw) {
 
-Request::Request(char* raw_data) {
+    auto data_string = std::string(data_raw);
 
-    char* line;
+    std::vector<std::string> lines = split(data_string, "\r\n");
 
-    char** lines = NULL;
+    auto first = lines.front();
 
-    strtok(raw_data, SEP_NEW_LINE);
-    
-    int lines_count = 0;
+    auto params = split(first, " ");
 
-    int i = 0;
+    this->method = params.at(0).c_str();
+    this->path = params.at(1).c_str();
+    this->schema = params.at(2).c_str();
 
-    while (line != NULL) {
-        
-        if (i == lines_count) {
+    lines.erase(lines.begin());
 
-            lines_count += STEP_SIZE;
-        }
+    for (auto& line: lines) {
 
-        lines = (char **) realloc(NULL, lines_count * sizeof(char *));
-
-        line = strtok(NULL, SEP_NEW_LINE);
-
-        lines[i] = line;
-
-        lines_count++;
-
-        i++;
+        auto column = split(line, " ");
     }
-
-    for (int i = 0; i < lines_count; i++) {
-
-        std::cout << lines[i] << std::endl;
-    }
-
-    free(lines);
-
-//    char *token;
-//
-//    char temp_data[4096];
-//
-//    std::cout << raw_data << std::endl;
-//
-//    memset(temp_data, 0, 4096);
-//
-//    // TODO: strcopy its not good, because buffer overflow, its better to use strncopy to set the length.
-//    strcpy(temp_data, raw_data);
-//
-//    strtok(temp_data, " ");
-//
-//    while (token != NULL) {
-//
-//        token = strtok(NULL, " ");
-//
-//        std::cout << "token: " << token << std::endl;
-//    }
-//
 }
+

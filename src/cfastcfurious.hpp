@@ -9,13 +9,21 @@
 #include <string.h>
 #include <netdb.h>
 #include <unistd.h>
-#include <string>
 
 #include "request.hpp" 
 
 #define SERVER_PORT 8000
 #define CONNECTIONS 256
 #define BUF_SIZE 4096 
+
+struct CFastCFurious {
+
+    CFastCFurious();
+
+    ~CFastCFurious();
+
+    static void run(const char* addr);
+};
 
 void panic(const char* error_msg);
 

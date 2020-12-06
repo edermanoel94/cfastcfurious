@@ -1,6 +1,11 @@
 #include "cfastcfurious.hpp" 
 
-int main() {
+CFastCFurious::CFastCFurious() {
+}
+
+CFastCFurious::~CFastCFurious() = default;
+
+void CFastCFurious::run(const char* addr) {
 
     // Create a socket
     auto listening = socket(AF_INET, SOCK_STREAM, 0);
@@ -27,6 +32,7 @@ int main() {
         panic("Cannot listen on the socket");
     }
 
+    // receive a request from client
     sockaddr_in sockaddr_cli;
     socklen_t socklen_cli = sizeof(sockaddr_cli);
 
@@ -50,15 +56,14 @@ int main() {
 
     Request req(buffer);
 
+    std::cout << req.method << std::endl;
+    std::cout << req.path << std::endl;
+    std::cout << req.schema << std::endl;
+
 //    char* page_content = get_content_page(&req);
 
-    std::cout << std::string(buffer, 0, bytes_recv) << std::endl;
-
     close(sock_cli);
-
-    return 0;
 }
-
 
 void panic(const char* error_msg) {
     std::cerr << error_msg << std::endl;
