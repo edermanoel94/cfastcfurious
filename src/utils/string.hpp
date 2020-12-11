@@ -5,6 +5,6 @@
 #include <vector>
 #include <algorithm>
 
-std::vector<std::string> split(std::string& str, const char* sep);
+std::vector<std::string> split(std::string* str, const char* sep);
 
 #endif

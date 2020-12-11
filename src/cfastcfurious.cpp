@@ -16,7 +16,7 @@ void CFastCFurious::run(const char* addr) {
 
     sockaddr_in hint;
     hint.sin_family = AF_INET;
-    hint.sin_port = htons(SERVER_PORT);
+    hint.sin_port = htons(8000);
 
     // Make the family address to listen on any ip of host machine
     if (inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr) == -1) {
@@ -55,10 +55,6 @@ void CFastCFurious::run(const char* addr) {
     }
 
     Request req(buffer);
-
-    std::cout << req.method << std::endl;
-    std::cout << req.path << std::endl;
-    std::cout << req.schema << std::endl;
 
 //    char* page_content = get_content_page(&req);
 

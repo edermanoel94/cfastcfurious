@@ -1,18 +1,19 @@
 #ifndef REQUEST_HPP
 #define REQUEST_HPP
 
-#include "string_utils.hpp"
+#include "../utils/string.hpp"
+#include <vector>
 #include <map>
 
 struct Request {
 
     const char* method;
     const char* schema;
-    const char* path;
+    const char* raw_path;
 
     std::map<std::string, std::vector<std::string>> headers;
 
-    Request(const char* data_raw);
+    Request(const char* raw_data);
 };
 
 #endif

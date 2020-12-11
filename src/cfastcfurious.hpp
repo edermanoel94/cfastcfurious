@@ -10,9 +10,8 @@
 #include <netdb.h>
 #include <unistd.h>
 
-#include "request.hpp" 
+#include "http/request.hpp" 
 
-#define SERVER_PORT 8000
 #define CONNECTIONS 256
 #define BUF_SIZE 4096 
 
