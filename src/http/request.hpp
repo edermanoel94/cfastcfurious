@@ -5,6 +5,8 @@
 #include <vector>
 #include <map>
 
+#define CRLF "\r\n"
+
 struct Request {
 
     const char* method;

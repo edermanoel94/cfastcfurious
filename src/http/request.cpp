@@ -3,26 +3,22 @@
 
 Request::Request(const char *raw_data) {
 
-    auto data_string = std::string(raw_data);
+  auto raw_data_str = std::string(raw_data);
 
-    std::vector<std::string> lines = split(&data_string, "\r\n");
+  std::vector<std::string> lines = split_crlf(raw_data_str);
 
-    auto first = lines.front();
+  auto first = lines.front();
 
-    auto params = split(&first, " ");
+  auto params = split(&first, " ");
 
-    this->method = params.at(0).c_str();
-    this->raw_path = params.at(1).c_str();
-    this->schema = params.at(2).c_str();
+  this->method = params[0].c_str();
+  this->raw_path = params[1].c_str();
+  this->schema = params[2].c_str();
 
-    lines.erase(lines.begin());
+  lines.erase(lines.begin());
 
-    for (auto &line : lines) {
+  for (auto &line : lines) {
 
-        std::vector<std::string> kv_pair = split(&line, ":");
 
-        for (int i = 0; i < kv_pair.size(); i++) {
-            std::cout << i << std::endl;
-        }
-    }
+  }
 }
