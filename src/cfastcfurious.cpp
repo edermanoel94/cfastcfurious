@@ -8,7 +8,9 @@ CFastCFurious::CFastCFurious(const char* ip_addr, int port) {
     this->port = port;
 }
 
-CFastCFurious::~CFastCFurious() = default;
+CFastCFurious::~CFastCFurious() {
+    close(this->sockfd);
+}
 
 CFastCFurious CFastCFurious::build(const char* ip_addr, int port) {
     return CFastCFurious(ip_addr, port);
@@ -16,9 +18,9 @@ CFastCFurious CFastCFurious::build(const char* ip_addr, int port) {
 
 void CFastCFurious::run() {
 
-    auto listening = socket(AF_INET, SOCK_STREAM, 0);
+    this->sockfd =  socket(AF_INET, SOCK_STREAM, 0);
 
-    if (listening == -1) {
+    if (this->sockfd == -1) {
         panic("Cannot create socket");
     }
 
@@ -30,33 +32,37 @@ void CFastCFurious::run() {
         panic("Invalid address family on IPv4");
     }
 
-    if (bind(listening, (sockaddr *)&sock_addr, sizeof(sock_addr)) == -1) {
+    if (bind(this->sockfd, (sockaddr *)&sock_addr, sizeof(sock_addr)) == -1) {
         panic("Cannot bind the socket with address");
     }
 
-    if (listen(listening, CONNECTIONS) == -1) {
+    if (listen(this->sockfd, CONNECTIONS) == -1) {
         panic("Cannot listen on the socket");
     }
 
     while(true) {
 
-        sockaddr_in sockadd_client;
-        socklen_t socketlen_client = sizeof(sockadd_client);
+        sockaddr_in sockaddr_c;
+        socklen_t socklen_c = sizeof(sockaddr_c);
 
-        auto sock_client = accept(listening, (sockaddr *)&sockadd_client, &socketlen_client);
+        int sockfd_c = accept(this->sockfd, (sockaddr *)&sockaddr_c, &socklen_c);
+
+        this->handler_conn(sockfd_c);
+    }
+}
+
+void CFastCFurious::handler_conn(int sockfd_c) {
 
         char buffer[BUF_SIZE] = {0};
 
-        auto bytes_recv = read(sock_client, buffer, BUF_SIZE);
+        auto bytes_recv = read(sockfd_c, buffer, BUF_SIZE);
 
         if (bytes_recv == -1) {
             error("Error on read bytes from client");
-            continue;
+            return;
         }
 
         Request req(buffer);
 
-        close(sock_client);
-    }
+        close(sockfd_c);
 }
-

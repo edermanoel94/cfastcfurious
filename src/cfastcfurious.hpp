@@ -21,12 +21,14 @@ struct CFastCFurious {
     int port;
     const char* ip_addr;
 
+    int sockfd;
+
     CFastCFurious();
     CFastCFurious(const char* ip_addr, int port);
-
     ~CFastCFurious();
 
     void run();
+    void handler_conn(int sockfd_c);
 
     static CFastCFurious build(const char* ip_addr, int port);
 };
