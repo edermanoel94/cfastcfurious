@@ -2,7 +2,8 @@
 
 int main() {
 
-    CFastCFurious::run("0.0.0.0:8000");
+    CFastCFurious::build("0.0.0.0", 8080)
+       .run();
 
     return 0;
 }

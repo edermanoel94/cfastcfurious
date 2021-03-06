@@ -9,6 +9,7 @@
 #include <string.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <netinet/in.h>
 
 #include "http/request.hpp" 
 
@@ -17,17 +18,17 @@
 
 struct CFastCFurious {
 
+    int port;
+    const char* ip_addr;
+
     CFastCFurious();
+    CFastCFurious(const char* ip_addr, int port);
 
     ~CFastCFurious();
 
-    static void run(const char* addr);
+    void run();
+
+    static CFastCFurious build(const char* ip_addr, int port);
 };
-
-void panic(const char* error_msg);
-
-void client_info(const sockaddr_in* sockaddr_cli, char* response);
-
-char* get_content_page(const Request* request);
 
 #endif

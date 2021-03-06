@@ -1,24 +1,23 @@
 #include "./request.hpp"
 #include <iostream>
 
-Request::Request(const char *raw_data) {
+Request::Request(const char *request_data) {
 
-  auto raw_data_str = std::string(raw_data);
+  auto request_data_str = std::string(request_data);
 
-  std::vector<std::string> lines = split_crlf(raw_data_str);
+  std::vector<std::string> lines = split_crlf(request_data_str);
 
-  auto first = lines.front();
+  std::string request_line = lines.front();
 
-  auto params = split(&first, " ");
+  std::cout << request_line << std::endl;
 
-  this->method = params[0].c_str();
-  this->raw_path = params[1].c_str();
-  this->schema = params[2].c_str();
+  std::vector<std::string> request_line_args = split(&request_line, " ");
 
-  lines.erase(lines.begin());
+  std::cout << request_line_args[0] << std::endl;
+  std::cout << request_line_args[1] << std::endl;
+  std::cout << request_line_args[2] << std::endl;
 
-  for (auto &line : lines) {
-
-
-  }
+  this->http_method = request_line_args[0].c_str();
+  this->raw_path = request_line_args[1].c_str();
+  this->schema = request_line_args[2].c_str();
 }

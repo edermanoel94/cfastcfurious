@@ -1,103 +1,62 @@
 #include "cfastcfurious.hpp"
-#include <iostream>
-#include <string>
-#include <vector>
+#include "utils/errors.hpp"
 
 CFastCFurious::CFastCFurious() {}
 
+CFastCFurious::CFastCFurious(const char* ip_addr, int port) {
+    this->ip_addr = ip_addr;
+    this->port = port;
+}
+
 CFastCFurious::~CFastCFurious() = default;
 
-void CFastCFurious::run(const char *addr) {
+CFastCFurious CFastCFurious::build(const char* ip_addr, int port) {
+    return CFastCFurious(ip_addr, port);
+}
 
-  // Create a socket
-  auto listening = socket(AF_INET, SOCK_STREAM, 0);
+void CFastCFurious::run() {
 
-  if (listening == -1) {
-    panic("Cannot create socket");
-  }
+    auto listening = socket(AF_INET, SOCK_STREAM, 0);
 
-  sockaddr_in hint;
-  hint.sin_family = AF_INET;
-  hint.sin_port = htons(8000);
-
-  // Make the family address to listen on any ip of host machine
-  if (inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr) == -1) {
-    panic("Invalid address family on IPv4");
-  }
-
-  // Make a bind with address to the socket
-  if (bind(listening, (sockaddr *)&hint, sizeof(hint)) == -1) {
-    panic("Cannot bind the socket with address");
-  }
-
-  if (listen(listening, CONNECTIONS) == -1) {
-    panic("Cannot listen on the socket");
-  }
-
-  // receive a request from client
-  sockaddr_in sockaddr_cli;
-  socklen_t socklen_cli = sizeof(sockaddr_cli);
-
-  auto sock_cli = accept(listening, (sockaddr *)&sockaddr_cli, &socklen_cli);
-
-  char response[256 + NI_MAXHOST + NI_MAXSERV];
-
-  client_info(&sockaddr_cli, response);
-
-  close(listening);
-
-  char buffer[BUF_SIZE];
-
-  memset(buffer, 0, BUF_SIZE);
-
-  auto bytes_recv = recv(sock_cli, buffer, sizeof(buffer), 0);
-
-  if (bytes_recv == -1) {
-    panic("Error on read bytes from client");
-  }
-
-  Request req(buffer);
-
-  std::cout << req.method << std::endl;
-  std::cout << req.raw_path << std::endl;
-  std::cout << req.schema << std::endl;
-
-  std::map<std::string, std::vector<std::string>>::iterator it =
-      req.headers.begin();
-
-  for (it = req.headers.begin(); it != req.headers.end(); ++it) {
-    for (auto value : it->second) {
-      std::cout << it->first << " => " << value;
+    if (listening == -1) {
+        panic("Cannot create socket");
     }
-  }
 
-  //    char* page_content = get_content_page(&req);
+    sockaddr_in sock_addr;
+    sock_addr.sin_family = AF_INET;
+    sock_addr.sin_port = htons(this->port);
 
-  close(sock_cli);
+    if (inet_pton(AF_INET, this->ip_addr, &sock_addr.sin_addr) == -1) {
+        panic("Invalid address family on IPv4");
+    }
+
+    if (bind(listening, (sockaddr *)&sock_addr, sizeof(sock_addr)) == -1) {
+        panic("Cannot bind the socket with address");
+    }
+
+    if (listen(listening, CONNECTIONS) == -1) {
+        panic("Cannot listen on the socket");
+    }
+
+    while(true) {
+
+        sockaddr_in sockadd_client;
+        socklen_t socketlen_client = sizeof(sockadd_client);
+
+        auto sock_client = accept(listening, (sockaddr *)&sockadd_client, &socketlen_client);
+
+        char buffer[BUF_SIZE] = {0};
+
+        auto bytes_recv = read(sock_client, buffer, BUF_SIZE);
+
+        if (bytes_recv == -1) {
+            error("Error on read bytes from client");
+            continue;
+        }
+
+        Request req(buffer);
+
+        close(sock_client);
+    }
 }
 
-void panic(const char *error_msg) {
-  std::cerr << error_msg << std::endl;
-  exit(-1);
-}
-
-void client_info(const sockaddr_in *sockaddr_cli, char *response) {
-
-  char host[NI_MAXHOST];
-  char service[NI_MAXSERV];
-
-  // fill array with 0 bytes
-  memset(host, 0, NI_MAXHOST);
-  memset(service, 0, NI_MAXSERV);
-
-  if (getnameinfo((sockaddr *)sockaddr_cli, sizeof(*sockaddr_cli), host,
-                  NI_MAXHOST, service, NI_MAXSERV, 0) == 0) {
-    sprintf(response, "connected on %s:%s", host, service);
-  } else {
-    inet_ntop(AF_INET, &sockaddr_cli->sin_addr, host, NI_MAXHOST);
-    sprintf(response, "connected on %s:%d", host,
-            ntohs(sockaddr_cli->sin_port));
-  }
-}
-
-char *get_content_page(const Request *request) { return NULL; }
