@@ -1,5 +1,4 @@
 #include "cfastcfurious.hpp"
-#include "utils/errors.hpp"
 
 CFastCFurious::CFastCFurious() {}
 
@@ -53,16 +52,27 @@ void CFastCFurious::run() {
 
 void CFastCFurious::handler_conn(int sockfd_c) {
 
-        char buffer[BUF_SIZE] = {0};
+    char buffer[BUF_SIZE] = {0};
 
-        auto bytes_recv = read(sockfd_c, buffer, BUF_SIZE);
+    auto bytes_recv = read(sockfd_c, buffer, BUF_SIZE);
 
-        if (bytes_recv == -1) {
-            error("Error on read bytes from client");
-            return;
-        }
+    if (bytes_recv == -1) {
+        error("Error on read bytes from client");
+        return;
+    }
 
-        Request req(buffer);
+    char response[BUF_SIZE] = {0};
 
-        close(sockfd_c);
+    this->handler_request(buffer, response);
+
+    write(sockfd_c, buffer, BUF_SIZE);
+    
+    close(sockfd_c);
+}
+
+void CFastCFurious::handler_request(const char* buffer, const char* response) {
+    const char* start_line = "HTTP/1.1 200 OK \r\n";
+    const char* blank_line = "\r\n";
+    const char* body = "Request received";
+    strncat(response, start_line, BUF_SIZE);
 }

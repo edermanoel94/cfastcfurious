@@ -1,17 +1,15 @@
 #ifndef CFASTCFURIOUS_HPP
 #define CFASTCFURIOUS_HPP
 
-#include <cstdlib>
-#include <iostream>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#include <string.h>
 #include <netdb.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <string.h>
 
-#include "http/request.hpp" 
+#include "utils/errors.hpp"
 
 #define CONNECTIONS 256
 #define BUF_SIZE 4096 
@@ -28,7 +26,10 @@ struct CFastCFurious {
     ~CFastCFurious();
 
     void run();
+
     void handler_conn(int sockfd_c);
+
+    void handler_request(const char* buffer, const char* response);
 
     static CFastCFurious build(const char* ip_addr, int port);
 };
