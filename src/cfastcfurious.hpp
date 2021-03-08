@@ -7,12 +7,15 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <netinet/in.h>
-#include <string.h>
+#include <string>
 
 #include "utils/errors.hpp"
+#include "http/Request.hpp"
+#include "http/Response.hpp"
 
 #define CONNECTIONS 256
 #define BUF_SIZE 4096 
+#define SERVER_NAME "CfastCFurious"
 
 struct CFastCFurious {
 
@@ -29,7 +32,7 @@ struct CFastCFurious {
 
     void handler_conn(int sockfd_c);
 
-    void handler_request(const char* buffer, const char* response);
+    void serve(Response resp, Request* request);
 
     static CFastCFurious build(const char* ip_addr, int port);
 };

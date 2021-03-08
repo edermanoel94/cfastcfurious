@@ -61,18 +61,15 @@ void CFastCFurious::handler_conn(int sockfd_c) {
         return;
     }
 
-    char response[BUF_SIZE] = {0};
+    char buffer_resp[BUF_SIZE] = {0};
 
-    this->handler_request(buffer, response);
+    Request req(buffer);
 
-    write(sockfd_c, buffer, BUF_SIZE);
+    write(sockfd_c, buffer_resp, BUF_SIZE);
     
     close(sockfd_c);
 }
 
-void CFastCFurious::handler_request(const char* buffer, const char* response) {
-    const char* start_line = "HTTP/1.1 200 OK \r\n";
-    const char* blank_line = "\r\n";
-    const char* body = "Request received";
-    strncat(response, start_line, BUF_SIZE);
+void CFastCFurious::serve(Response resp, Request* request) {
+
 }
