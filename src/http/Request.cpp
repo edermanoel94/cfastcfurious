@@ -10,8 +10,10 @@ Request::Request(const char* buffer) {
 
     auto req_line_word = split(request_line, " ");
     
-    this->method = req_line_word[0].c_str();
-    
+    if (!req_line_word[0].empty()) {
+        this->method = req_line_word[0].c_str();
+    }
+
     if (!req_line_word[1].empty()) {
         this->raw_path = req_line_word[1].c_str();
     }
@@ -19,4 +21,8 @@ Request::Request(const char* buffer) {
     if (!req_line_word[2].empty()) {
         this->http_scheme = req_line_word[2].c_str();
     }
+}
+
+void Request::dump() {
+    std::cout << "Path:\t" << this->raw_path << std::endl << "Method:\t" << this->method << std::endl;
 }

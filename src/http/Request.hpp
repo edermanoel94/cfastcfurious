@@ -5,6 +5,8 @@
 
 #include "../utils/string.hpp"
 
+#include "identifiers.hpp"
+
 struct Request {
 
     const char* method;
@@ -12,6 +14,8 @@ struct Request {
     const char* http_scheme;
 
     Request(const char* buffer);
+
+    void dump();
 };
 
 #endif

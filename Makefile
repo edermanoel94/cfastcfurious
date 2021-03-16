@@ -3,7 +3,7 @@
 all: debug
 
 release: 
-	g++ -o cfastcfurious ./src/main.cpp ./src/cfastcfurious.cpp
+	g++ -o cfastcfurious ./main.cpp ./src/server.cpp ./src/http/Request.cpp ./src/http/Response.cpp ./src/utils/errors.cpp ./src/utils/string.cpp
 
 debug:
-	g++ -g -o cfastcfurious ./src/main.cpp ./src/cfastcfurious.cpp ./src/utils/errors.cpp ./src/utils/string.cpp
+	g++ -g -o cfastcfurious ./src/main.cpp ./src/server.cpp ./src/http/Request.cpp ./src/http/Response.cpp  ./src/utils/errors.cpp ./src/utils/string.cpp
