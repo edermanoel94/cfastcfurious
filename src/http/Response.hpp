@@ -2,6 +2,7 @@
 #define RESPONSE_HPP
 
 #include <string>
+#include <iostream>
 
 #include "identifiers.hpp"
 
@@ -13,7 +14,9 @@ struct Response {
 
     const char* body;
 
-    std::string mount();
+    Response(const char* body);
+
+    std::string result();
 };
 
 #endif

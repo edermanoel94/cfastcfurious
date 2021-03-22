@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "utils/errors.hpp"
 #include "http/Request.hpp"

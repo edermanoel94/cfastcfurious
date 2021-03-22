@@ -67,23 +67,21 @@ void HTTPServer::handler_conn(int sockfd_c) {
     }
 
     Request req(buffer);
-    Response resp;
 
-    req.dump();
+    std::string html = read_html_from_path(req.raw_path);
 
-    if (strcmp(req.method, METHOD_GET)) {
+    Response resp(html.c_str());
 
-        std::string html = read_html_from_path(req.raw_path);
+    std::cout << resp.result().c_str() << std::endl;
 
-        write(sockfd, html.c_str(), BUF_SIZE);
-    }
+    write(sockfd, resp.result().c_str(), BUF_SIZE);
 
     close(sockfd_c);
 }
 
 std::string HTTPServer::read_html_from_path(const char* path) {
 
-    FILE* file = fopen(path, "r");
+    FILE* file = fopen("public.html", "r");
 
     if (file == NULL) {
         error("cannot read file");
@@ -91,8 +89,20 @@ std::string HTTPServer::read_html_from_path(const char* path) {
     }
 
     char buf[BUF_SIZE];
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-    fscanf(file, "%s", buf);
+    std::string result;
 
-    return std::string(buf);
+    while ((read = getline(&line, &len, file)) != -1) {
+        result += line;
+    }
+
+    fclose(file);
+
+    if (line)
+        free(line);
+
+    return result;
 }
