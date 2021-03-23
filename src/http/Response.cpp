@@ -8,6 +8,10 @@ std::string Response::result() {
 
     std::string result; 
 
+    char buf[100] = {0};
+
+    snprintf(buf, 100, "", "");
+
     result += this->http_scheme;
     result += " ";
     result += this->status_code;
