@@ -1,6 +1,8 @@
 #include "Request.hpp"
 
-Request::Request(const char* buffer) {
+Request Request::parse(const char* buffer) {
+
+    Request req;
 
     std::string buffer_str = std::string(buffer);
 
@@ -11,18 +13,21 @@ Request::Request(const char* buffer) {
     auto req_line_word = split(request_line, " ");
     
     if (!req_line_word[0].empty()) {
-        this->method = req_line_word[0].c_str();
+        req.method = req_line_word[0].c_str();
     }
 
     if (!req_line_word[1].empty()) {
-        this->raw_path = req_line_word[1].c_str();
+        req.raw_path = req_line_word[1].c_str();
     }
 
     if (!req_line_word[2].empty()) {
-        this->http_scheme = req_line_word[2].c_str();
+        req.http_scheme = req_line_word[2].c_str();
     }
+
+    return req;
 }
 
 void Request::dump() {
-    std::cout << "Path:\t" << this->raw_path << std::endl << "Method:\t" << this->method << std::endl;
+    std::cout << "Path:\t" << this->raw_path << std::endl << "Method:\t" 
+        << this->method << std::endl;
 }

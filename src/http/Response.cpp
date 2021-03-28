@@ -1,28 +1,16 @@
 #include "Response.hpp"
 
-Response::Response(const char* body) {
+Response::Response(std::string body) {
     this->body = body;
 }
 
 std::string Response::result() {
 
-    std::string result; 
+    char buf[4096] = {0};
 
-    char buf[100] = {0};
+    snprintf(buf, 100, "%s %s %s \r\n%s\r\n\r\n%s", this->http_scheme, this->status_code,
+            this->status_text, "Server: CFastCfurious", this->body.c_str());
 
-    snprintf(buf, 100, "", "");
 
-    result += this->http_scheme;
-    result += " ";
-    result += this->status_code;
-    result += " ";
-    result += this->status_text;
-    result += "\r\n";
-    result += "Server: CfastCFurious";
-    result += "\r\n";
-    result += "Content-Type: text/html";
-    result += "\r\n\r\n";
-    result += this->body;
-
-    return result;
+    return std::string(buf);
 }

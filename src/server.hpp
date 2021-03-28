@@ -24,21 +24,21 @@
 struct HTTPServer {
 
     int port;
-    const char* ip_addr;
+    std::string ipaddr;
 
     int sockfd;
 
     HTTPServer();
-    HTTPServer(const char* ip_addr, int port);
+    HTTPServer(std::string ipaddr, int port);
     ~HTTPServer();
 
     void run();
 
     void handler_conn(int sockfd_c);
 
-    std::string read_html_from_path(const char* path);
+    std::string read_html_from_path(std::string path);
 
-    static HTTPServer build(const char* ip_addr, int port);
+    static HTTPServer build(std::string ipaddr, int port);
 };
 
 #endif

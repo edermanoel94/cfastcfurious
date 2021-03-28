@@ -12,9 +12,9 @@ struct Response {
     const char* status_code = "200";
     const char* status_text = "OK";
 
-    const char* body;
+    std::string body;
 
-    Response(const char* body);
+    Response(std::string body);
 
     std::string result();
 };

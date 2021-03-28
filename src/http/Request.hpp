@@ -13,7 +13,7 @@ struct Request {
     const char* raw_path;
     const char* http_scheme;
 
-    Request(const char* buffer);
+    static Request parse(const char* buffer);
 
     void dump();
 };

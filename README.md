@@ -1,9 +1,17 @@
 # CFastCFurious
 
-The CFastCFurious project is under development.
+The CFastCFurious WebServer project is under development.
 
 # Requirements
 
 - GCC 9.3.0+
+- Linux
 
-Obs: Only works unix-like, no plans to working on win32 yet.
+# TODO
+
+ - [ ] Change to C++ syntax
+ - [ ] Implement Request/Response HTTP Parser (Basic version)
+ - [ ] Implements Method GET and POST
+ - [ ] Multithread with lib pthread
+ 
+

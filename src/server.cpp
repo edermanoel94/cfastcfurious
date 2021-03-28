@@ -2,8 +2,8 @@
 
 HTTPServer::HTTPServer() {}
 
-HTTPServer::HTTPServer(const char* ip_addr, int port) {
-    this->ip_addr = ip_addr;
+HTTPServer::HTTPServer(std::string ipaddr, int port) {
+    this->ipaddr = ipaddr;
     this->port = port;
 }
 
@@ -11,8 +11,8 @@ HTTPServer::~HTTPServer() {
     close(this->sockfd);
 }
 
-HTTPServer HTTPServer::build(const char* ip_addr, int port) {
-    return HTTPServer(ip_addr, port);
+HTTPServer HTTPServer::build(std::string ipaddr, int port) {
+    return HTTPServer(ipaddr, port);
 }
 
 void HTTPServer::run() {
@@ -27,7 +27,7 @@ void HTTPServer::run() {
     sock_addr.sin_family = AF_INET;
     sock_addr.sin_port = htons(this->port);
 
-    if (inet_pton(AF_INET, this->ip_addr, &sock_addr.sin_addr) == -1) {
+    if (inet_pton(AF_INET, this->ipaddr.c_str(), &sock_addr.sin_addr) == -1) {
         panic("Invalid address family on IPv4");
     }
 
@@ -57,6 +57,7 @@ void HTTPServer::run() {
 
 void HTTPServer::handler_conn(int sockfd_c) {
 
+    // TODO: implements a Buffer
     char buffer[BUF_SIZE] = {0};
 
     auto bytes_recv = read(sockfd_c, buffer, BUF_SIZE);
@@ -66,7 +67,7 @@ void HTTPServer::handler_conn(int sockfd_c) {
         return;
     }
 
-    Request req(buffer);
+    Request req = Request::parse(buffer);
 
     std::string html = read_html_from_path(req.raw_path);
 
@@ -79,9 +80,9 @@ void HTTPServer::handler_conn(int sockfd_c) {
     close(sockfd_c);
 }
 
-std::string HTTPServer::read_html_from_path(const char* path) {
+std::string HTTPServer::read_html_from_path(std::string path) {
 
-    FILE* file = fopen("public.html", "r");
+    FILE* file = fopen(path.c_str(), "r");
 
     if (file == NULL) {
         error("cannot read file");

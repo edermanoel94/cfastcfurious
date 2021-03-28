@@ -1,0 +1,46 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BUF_SIZE	src/server.hpp	21;"	d
+CFASTCFURIOUS_HPP	src/server.hpp	2;"	d
+CONNECTIONS	src/server.hpp	20;"	d
+HTTPServer	src/server.cpp	/^HTTPServer::HTTPServer() {}$/;"	f	class:HTTPServer
+HTTPServer	src/server.cpp	/^HTTPServer::HTTPServer(const char* ip_addr, int port) {$/;"	f	class:HTTPServer
+HTTPServer	src/server.hpp	/^struct HTTPServer {$/;"	s
+HTTP_V1_1	src/http/identifiers.hpp	7;"	d
+IDENTIFIERS_HPP	src/http/identifiers.hpp	2;"	d
+METHOD_GET	src/http/identifiers.hpp	4;"	d
+METHOD_POST	src/http/identifiers.hpp	5;"	d
+REQUEST_HPP	src/http/Request.hpp	2;"	d
+RESPONSE_HPP	src/http/Response.hpp	2;"	d
+Request	src/http/Request.cpp	/^Request::Request(const char* buffer) {$/;"	f	class:Request
+Request	src/http/Request.hpp	/^struct Request {$/;"	s
+Response	src/http/Response.cpp	/^Response::Response(const char* body) {$/;"	f	class:Response
+Response	src/http/Response.hpp	/^struct Response {$/;"	s
+SERVER_NAME	src/server.hpp	22;"	d
+STRING_UTILS_HPP	src/utils/string.hpp	2;"	d
+body	src/http/Response.hpp	/^    const char* body;$/;"	m	struct:Response
+build	src/server.cpp	/^HTTPServer HTTPServer::build(const char* ip_addr, int port) {$/;"	f	class:HTTPServer
+dump	src/http/Request.cpp	/^void Request::dump() {$/;"	f	class:Request
+error	src/utils/errors.cpp	/^void error(const char* msg) {$/;"	f
+handler_conn	src/server.cpp	/^void HTTPServer::handler_conn(int sockfd_c) {$/;"	f	class:HTTPServer
+http_scheme	src/http/Request.hpp	/^    const char* http_scheme;$/;"	m	struct:Request
+http_scheme	src/http/Response.hpp	/^    const char* http_scheme = HTTP_V1_1;$/;"	m	struct:Response
+ip_addr	src/server.hpp	/^    const char* ip_addr;$/;"	m	struct:HTTPServer
+main	src/main.cpp	/^int main() {$/;"	f
+method	src/http/Request.hpp	/^    const char* method;$/;"	m	struct:Request
+panic	src/utils/errors.cpp	/^void panic(const char* msg) {$/;"	f
+port	src/server.hpp	/^    int port;$/;"	m	struct:HTTPServer
+raw_path	src/http/Request.hpp	/^    const char* raw_path;$/;"	m	struct:Request
+read_html_from_path	src/server.cpp	/^std::string HTTPServer::read_html_from_path(const char* path) {$/;"	f	class:HTTPServer
+result	src/http/Response.cpp	/^std::string Response::result() {$/;"	f	class:Response
+run	src/server.cpp	/^void HTTPServer::run() {$/;"	f	class:HTTPServer
+sockfd	src/server.hpp	/^    int sockfd;$/;"	m	struct:HTTPServer
+split	src/utils/string.cpp	/^std::vector<std::string> split(std::string& str, const char* sep) {$/;"	f
+split_crlf	src/utils/string.cpp	/^std::vector<std::string> split_crlf(std::string &str) {$/;"	f
+status_code	src/http/Response.hpp	/^    const char* status_code = "200";$/;"	m	struct:Response
+status_text	src/http/Response.hpp	/^    const char* status_text = "OK";$/;"	m	struct:Response
+~HTTPServer	src/server.cpp	/^HTTPServer::~HTTPServer() {$/;"	f	class:HTTPServer
