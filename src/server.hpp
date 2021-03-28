@@ -7,11 +7,10 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <netinet/in.h>
-#include <string>
-#include <string.h>
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <string>
+#include <cstring>
+#include <fstream>
 
 #include "utils/errors.hpp"
 #include "http/Request.hpp"
@@ -19,7 +18,6 @@
 
 #define CONNECTIONS 256
 #define BUF_SIZE 4096 
-#define SERVER_NAME "CfastCFurious"
 
 struct HTTPServer {
 

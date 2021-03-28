@@ -7,9 +7,7 @@ HTTPServer::HTTPServer(std::string ipaddr, int port) {
     this->port = port;
 }
 
-HTTPServer::~HTTPServer() {
-    close(this->sockfd);
-}
+HTTPServer::~HTTPServer() = default;
 
 HTTPServer HTTPServer::build(std::string ipaddr, int port) {
     return HTTPServer(ipaddr, port);
@@ -20,6 +18,7 @@ void HTTPServer::run() {
     this->sockfd =  socket(AF_INET, SOCK_STREAM, 0);
 
     if (this->sockfd == -1) {
+        close(this->sockfd);
         panic("Cannot create socket");
     }
 
@@ -28,14 +27,17 @@ void HTTPServer::run() {
     sock_addr.sin_port = htons(this->port);
 
     if (inet_pton(AF_INET, this->ipaddr.c_str(), &sock_addr.sin_addr) == -1) {
+        close(this->sockfd);
         panic("Invalid address family on IPv4");
     }
 
     if (bind(this->sockfd, (sockaddr *)&sock_addr, sizeof(sock_addr)) == -1) {
+        close(this->sockfd);
         panic("Cannot bind the socket with address");
     }
 
     if (listen(this->sockfd, CONNECTIONS) == -1) {
+        close(this->sockfd);
         panic("Cannot listen on the socket");
     }
 
@@ -64,6 +66,7 @@ void HTTPServer::handler_conn(int sockfd_c) {
 
     if (bytes_recv == -1) {
         error("Error on read bytes from client");
+        close(sockfd_c);
         return;
     }
 
@@ -71,39 +74,25 @@ void HTTPServer::handler_conn(int sockfd_c) {
 
     std::string html = read_html_from_path(req.raw_path);
 
-    Response resp(html.c_str());
+    Response resp(html);
 
-    std::cout << resp.result().c_str() << std::endl;
+    std::string result = resp.result();
 
-    write(sockfd, resp.result().c_str(), BUF_SIZE);
+    send(sockfd_c, result.data(), strlen(result.data()), 0);
 
     close(sockfd_c);
 }
 
 std::string HTTPServer::read_html_from_path(std::string path) {
 
-    FILE* file = fopen(path.c_str(), "r");
+    std::ifstream file("public.html");
 
-    if (file == NULL) {
-        error("cannot read file");
-        return NULL;
-    }
+    std::string line, result;
 
-    char buf[BUF_SIZE];
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
+    while(std::getline(file, line)) {
 
-    std::string result;
-
-    while ((read = getline(&line, &len, file)) != -1) {
         result += line;
     }
-
-    fclose(file);
-
-    if (line)
-        free(line);
 
     return result;
 }

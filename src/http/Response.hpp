@@ -17,6 +17,8 @@ struct Response {
     Response(std::string body);
 
     std::string result();
+
+    void dump();
 };
 
 #endif
