@@ -11,6 +11,8 @@ The CFastCFurious WebServer project is under development.
 
  - [ ] Change to C++ syntax I
  - [x] Implement Request/Response HTTP Parser (Basic version)
+ - [x] Using CMake
+ - [ ] Using Google Test
  - [ ] Implement Request/Response Headers Parser
  - [ ] Return an simple HTML page.
  - [ ] Implements Method GET and POST
