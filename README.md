@@ -2,10 +2,15 @@
 
 The CFastCFurious WebServer project is under development.
 
+# Supported compilers:
+
+- Linux: G++ 9.3 
+- MacOS: Apple clang version 12.0.0 
+- Windows: Not supported.
+
 # Requirements
 
-- GCC 9.3.0+
-- Linux
+- CMake 3.10+
 
 # TODO
 
