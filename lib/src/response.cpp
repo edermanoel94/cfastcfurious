@@ -1,4 +1,4 @@
-#include "Response.hpp"
+#include "response.hpp"
 
 std::string Response::result() {
 
@@ -14,7 +14,7 @@ Response::Response(std::string body) {
     this->body = body;
 }
 
-Response::dump() {
+void Response::dump() {
     std::cout << "Status Code:\t" << this->status_code << std::endl << "Status Text:\t" 
         << this->status_text << std::endl;
 }

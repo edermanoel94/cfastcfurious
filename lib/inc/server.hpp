@@ -12,9 +12,9 @@
 #include <cstring>
 #include <fstream>
 
-#include "utils/errors.hpp"
-#include "http/Request.hpp"
-#include "http/Response.hpp"
+#include "errors.hpp"
+#include "request.hpp"
+#include "response.hpp"
 
 #define CONNECTIONS 256
 #define BUF_SIZE 4096 
