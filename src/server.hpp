@@ -17,12 +17,12 @@
 #include "response.hpp"
 
 #define CONNECTIONS 256
-#define BUF_SIZE 4096 
+#define BUF_SIZE 1 << 15
 
 struct HTTPServer {
 
-    int port;
     std::string ipaddr;
+    int port;
 
     int sockfd;
 
@@ -34,6 +34,7 @@ struct HTTPServer {
 
     void handler_conn(int sockfd_c);
 
+    // TODO: remove from server
     std::string read_html_from_path(std::string path);
 
     static HTTPServer build(std::string ipaddr, int port);

@@ -1,0 +1,108 @@
+
+HTTP Parsing
+Athula Balachandran
+Wolfgang Richter
+
+Homework 1
+• Please write your name and andrew id
+– 2 answer sheets without name, need to claim!
+
+• Don’t just show calculations without any explanation.
+– Need partial credits?
+
+• Please make it legible
+– If not, type it up!
+
+PJ 2 CP 2
+• GET, POST and HEAD requests
+• Read the documents first to understand
+the rules.
+• RFC 2616
+• Check the annotated RFC
+
+HTTP request
+• Request =
+Request-Line ;
+*(( general-header ;
+request-header ;
+entity-header ) CRLF) ;
+CRLF [ message-body ] ;
+
+HTTP response
+• Response =
+Status-Line ;
+*(( general-header ;
+response-header ;
+entity-header ) CRLF) ;
+CRLF [ message-body ] ;
+
+Tools
+• Use tools to look at these requests and see the pattern for real
+– Wireshark
+• http://www.wireshark.org/
+
+– Use the dumper code
+– Play with the headers
+• Tamperdata
+• Poster
+
+– Online tools
+• http://web-sniffer.net/
+
+Sample GET request
+
+GET request was done on this page.
+Do you see the pattern?
+
+Sample POST request
+
+POST method called while submitting this form.
+Can you identify the values that were submitted?
+
+HEAD is similar to GET!
+
+Sample GET response
+
+.
+
+Sample POST response
+
+For this checkpoint you just have to send status
+code. More on dynamic content later!
+
+Minimal Implementation
+• Status codes
+– 200_OK
+– 404_NOT_FOUND
+– 411_LENGTH_REQUIRED
+– 500_INTERNAL_SERVER_ERROR
+– 501_NOT_IMPLEMENTED
+– 503_SERVICE_UNAVAILABLE
+– 505_HTTP_VERSION_NOT_SUPPORTED
+
+Minimal Implementation
+• General Headers
+– Connection
+– Date
+
+• Response Headers
+– Server should always be: Liso/1.0
+
+• Entity Headers
+–
+–
+–
+–
+
+Content-Encoding
+Content-Length
+Content-Type
+Last-Modified
+
+Be careful with the buffers!
+• Requests may straddle multiple recv calls
+– Need to maintain state information.
+
+• If request header size > 8192 bytes
+– For now, send error message and disconnect.
+

@@ -1,7 +1,6 @@
 .idea
 .vscode
 *.out
-cfastcfurious
 tags
 Debug
 compile_commands.json

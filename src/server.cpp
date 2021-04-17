@@ -15,7 +15,7 @@ HTTPServer HTTPServer::build(std::string ipaddr, int port) {
 
 void HTTPServer::run() {
 
-    this->sockfd =  socket(AF_INET, SOCK_STREAM, 0);
+    this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     if (this->sockfd == -1) {
         close(this->sockfd);
@@ -62,9 +62,7 @@ void HTTPServer::handler_conn(int sockfd_c) {
     // TODO: implements a Buffer
     char buffer[BUF_SIZE] = {0};
 
-    auto bytes_recv = read(sockfd_c, buffer, BUF_SIZE);
-
-    if (bytes_recv == -1) {
+    if (read(sockfd_c, buffer, BUF_SIZE) == -1) {
         error("Error on read bytes from client");
         close(sockfd_c);
         return;

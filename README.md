@@ -17,11 +17,16 @@ The CFastCFurious WebServer project is under development.
  - [ ] Change to C++ syntax I
  - [x] Implement Request/Response HTTP Parser (Basic version)
  - [x] Using CMake
- - [ ] Using Google Test
- - [ ] Implement Request/Response Headers Parser
+ - [x] Structuring project
+ - [x] Using Google Test
+ - [ ] Implement Request/Response Headers Parser (Advance version)
  - [ ] Return an simple HTML page.
  - [ ] Implements Method GET and POST
- - [ ] Multithread with lib pthread
+ - [ ] Multithreading 
  - [ ] Handling signals
+ - [ ] Using non-blocking
  
+# References
 
+ - [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
+ - [Darkhttpd](https://unix4lyfe.org/darkhttpd/)
